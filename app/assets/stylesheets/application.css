@@ -1,0 +1,108 @@
+.gameboy {
+  box-shadow: 0px -5px 0px #0d0e51, 0px 5px 0px #3d38b5;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: calc(100% - 34px);
+    left: 5px;
+    width: calc(100% - 10px);
+    height: 50px;
+    border-radius: 50%;
+    background-color: #4f50db;
+    box-shadow: 0px 5px 0px #3d38b5;
+    border-bottom: 2px solid #9998eb;
+  }
+}
+
+.screen-area {
+  box-shadow: 0px 2px 0px black, 0px -2px 0px black, -2px 0px 0px black, 2px 0px 0px black;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: calc(100% - 20px);
+    left: 5px;
+    width: calc(100% - 10px);
+    height: 30px;
+    border-radius: 50%;
+    background-color: #23252d;
+    box-shadow: 0px 2px 0px black;
+  }
+}
+
+.nintendo {
+  text-shadow: 0px -2px 1px #6b67ed;
+  box-shadow: 0px -2px 1px #6b67ed;
+}
+
+.right {
+  box-shadow: 0px -2px 0px #888 inset;
+}
+
+.down {
+  box-shadow: 0px -2px 0px #888 inset;
+}
+
+.left {
+  box-shadow: 0px -2px 0px #888 inset;
+}
+
+.middle::after {
+  content: "";
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  display: inline-block;
+  border: 1px solid #6e737a;
+  background: linear-gradient(to bottom, #6d7075 0%, #6d7075 30%, #23272f 70%, #23272f 100%);
+  border-radius: 50%;
+  height: 60%;
+  width: 60%;
+}
+
+.a-b {
+  .a,
+  .b {
+    box-shadow: -1px 1px 5px black, 0px 0px 5px black inset;
+    text-shadow: 0px -1px 1px #888;
+    transition: box-shadow 0.1s ease-out, border 0.1s ease-out, line-height 0.2s ease-out;
+
+    &:active {
+      box-shadow: -1px 1px 1px black, 0px 0px 5px black inset;
+    }
+  }
+}
+
+.start-select {
+  .select,
+  .start {
+    &::before {
+      content: "";
+      display: block;
+      margin: 0 auto;
+      width: 30px;
+      height: 10px;
+      margin-bottom: 5px;
+      border-radius: 40%;
+      background: linear-gradient(to bottom, #0b0a1c 0%, #0b0a1c 30%, #62636c 70%, #62636c 100%);
+      background-repeat: no-repeat;
+      border: 2px solid #0b0a1c;
+      box-shadow: 0px -2px 1px #8482e9;
+      cursor: pointer;
+    }
+    &:active::before {
+      background: linear-gradient(to bottom, #0b0a1c 0%, #0b0a1c 50%, #62636c 100%);
+    }
+  }
+}
+
+.speaker-open {
+  box-shadow: 0px 0px 2px #7c7be0 inset;
+}
+
+.speaker-closed {
+  box-shadow: 0px 0px 2px #7c7be0 inset;
+}
