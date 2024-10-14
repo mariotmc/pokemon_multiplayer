@@ -5,6 +5,8 @@ class Player < ApplicationRecord
 
   before_create :set_color
 
+  has_many :messages
+
   private
     def set_color
       self.color = COLORS.sample
