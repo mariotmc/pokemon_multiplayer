@@ -1,4 +1,6 @@
 class ButtonsController < ApplicationController
+  before_action :authenticate_player!
+
   def index
   end
 
@@ -17,4 +19,9 @@ class ButtonsController < ApplicationController
       render json: { error: "Request timed out" }, status: :gateway_timeout
     end
   end
+
+  private
+    def authenticate_player!
+      redirect_to new_player_path if Current.player.nil?
+    end
 end
