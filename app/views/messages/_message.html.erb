@@ -1,0 +1,4 @@
+<%= turbo_frame_tag dom_id(message), class: "block mb-1" do %>
+  <span class="font-bold text-<%= message.player.color %>-500"><%= message.player.name %>:</span>
+  <%= message.content %>
+<% end %>
