@@ -23,8 +23,8 @@ proxy:
   app_port: 3000
   healthcheck:
     path: /up
-    interval: 3
-    timeout: 30
+    interval: 10
+    timeout: 60
 
 # Credentials for your image host.
 registry:
