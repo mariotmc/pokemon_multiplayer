@@ -25,6 +25,7 @@ proxy:
     path: /up
     interval: 10
     timeout: 60
+    protocol: http
 
 # Credentials for your image host.
 registry:
