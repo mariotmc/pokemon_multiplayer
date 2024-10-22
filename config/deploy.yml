@@ -21,10 +21,6 @@ proxy:
   host: pokemon.mariotmc.com
   # kamal-proxy connects to your container over port 80, use `app_port` to specify a different port.
   app_port: 3000
-  healthcheck:
-    path: /up
-    interval: 10
-    timeout: 60
 
 # Credentials for your image host.
 registry:
@@ -38,7 +34,7 @@ registry:
 
 # Configure builder setup.
 builder:
-  arch: amd64
+  arch: x86_64
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 #
 env:
