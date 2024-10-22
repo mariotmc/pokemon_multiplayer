@@ -25,7 +25,7 @@ proxy:
     path: /up
     interval: 10
     timeout: 60
-    protocol: http
+    ssl_verify: false
 
 # Credentials for your image host.
 registry:
