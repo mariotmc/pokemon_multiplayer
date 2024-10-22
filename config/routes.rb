@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   get "messages", to: "messages#index"
 
   resources :players, only: [:new, :create]
+
+  get "up" => "rails/health#show", as: :rails_health_check
 end
