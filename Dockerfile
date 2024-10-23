@@ -58,8 +58,7 @@ USER rails:rails
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-USER root
 # Start the server by default, this can be overwritten at runtime
-EXPOSE 80
+EXPOSE 3000
 
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["./bin/rails", "server"]

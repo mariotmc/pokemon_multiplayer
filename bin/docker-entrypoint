@@ -1,19 +1,8 @@
 #!/bin/bash -e
 
-echo "Running docker entrypoint script"
-
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-    echo "Preparing database"
-    ./bin/rails db:prepare
-    echo "Database preparation completed"
+  echo "DOCKER ENTRYPOINT"
 fi
 
-# Make sure the server binds to 0.0.0.0
-if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  echo "Starting Rails server"
-  exec ./bin/rails server -b 0.0.0.0 -p 80
-else
-  echo "Running command: ${@}"
-  exec "${@}"
-fi
+exec "${@}"
