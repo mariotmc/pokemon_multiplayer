@@ -16,7 +16,13 @@ servers:
 # Enable SSL auto certification via Let's Encrypt (and allow for multiple apps on one server).
 # If using something like Cloudflare, it is recommended to set encryption mode
 # in Cloudflare's SSL/TLS setting to "Full" to enable end-to-end encryption.
-proxy: false
+proxy:
+  ssl: false
+  app_port: 3000
+  healthcheck:
+    path: /up
+    interval: 6
+    timeout: 60
 
 # Credentials for your image host.
 registry:
