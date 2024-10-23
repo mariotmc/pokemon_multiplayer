@@ -7,7 +7,7 @@ image: mariotmc/pokemon
 # Deploy to these servers.
 servers:
   web:
-    - mariotmc.com
+    - 188.245.183.143
   # job:
   #   hosts:
   #     - 192.168.0.1
