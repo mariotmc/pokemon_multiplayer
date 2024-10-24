@@ -19,5 +19,5 @@ test:
 
 production:
   adapter: postgresql
-  url: <%= Rails.application.credentials.dig(:database_url) %>
+  url: <%= ENV['DATABASE_URL'] %>
   prepared_statements: false
