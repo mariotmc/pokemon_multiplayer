@@ -25,7 +25,7 @@ class ButtonsController < ApplicationController
 
     def send_button_press(button)
       HTTParty.post(
-        "https://8e0a-80-109-2-170.ngrok-free.app/mgba-http/button/tap?key=#{params[:button]}",
+        "https://ce8b-80-109-2-170.ngrok-free.app/mgba-http/button/tap?key=#{params[:button]}",
         headers: { "accept" => "*/*", "ngrok-skip-browser-warning" => "true" },
         timeout: 5
       )
