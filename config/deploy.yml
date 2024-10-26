@@ -5,6 +5,10 @@ image: mariotmc/pokemon
 servers:
   web:
     - 188.245.183.143
+  # job:
+  #   hosts:
+  #     - 192.168.0.1
+  #   cmd: bin/jobs
 
 proxy:
   ssl: false
@@ -65,9 +69,7 @@ accessories:
       - /var/lib/postgresql/data:/var/lib/postgresql/data
   redis:
     image: redis:latest
-    roles:
-      - web
-      - job
+    host: 188.245.183.143
     cmd: "redis-server"
     volumes:
       - /var/lib/redis:/data
