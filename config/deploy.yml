@@ -69,7 +69,6 @@ accessories:
       - /var/lib/postgresql/data:/var/lib/postgresql/data
   redis:
     image: redis:latest
-    host: 188.245.183.143
     roles:
       - web
       - job
