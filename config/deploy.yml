@@ -5,10 +5,6 @@ image: mariotmc/pokemon
 servers:
   web:
     - 188.245.183.143
-  # job:
-  #   hosts:
-  #     - 192.168.0.1
-  #   cmd: bin/jobs
 
 proxy:
   ssl: false
