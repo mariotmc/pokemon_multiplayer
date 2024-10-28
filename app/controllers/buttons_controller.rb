@@ -10,7 +10,7 @@ class ButtonsController < ApplicationController
 
     begin
       socket = TCPSocket.new('188.245.183.143', 8888)
-      message = "mgba-http.button.tap,#{params[:button]}"
+      message = "mgba-http.button.tap,#{params[:button]}\n"
 
       Rails.logger.info "Sending to mGBA: #{message}"
       socket.puts(message)
