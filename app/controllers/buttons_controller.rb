@@ -43,6 +43,8 @@ class ButtonsController < ApplicationController
       url = "http://188.245.183.143:5000/mgba-http/button/tap?key=#{params[:button]}"
       Rails.logger.info "Sending request to: #{url}"
 
+      Rails.logger.info "Expected socket message: mgba-http.button.tap,#{params[:button]}"
+
       HTTParty.post(
         url,
         headers: { "accept" => "*/*" },
