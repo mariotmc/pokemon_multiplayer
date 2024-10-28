@@ -6,24 +6,15 @@ class ButtonsController < ApplicationController
   end
 
   def create
-    require 'socket'
-
     begin
-      socket = TCPSocket.new('188.245.183.143', 8888)
-      message = "mgba-http.button.tap,#{params[:button]}\n"
+      message = Current.player.messages.create!(content: "#{params[:button]}")
+      response = send_button_press(params[:button])
 
-      Rails.logger.info "Sending to mGBA: #{message}"
-      socket.puts(message)
+      message.render_messages if response.success?
 
-      response = socket.gets
-      Rails.logger.info "Response from mGBA: #{response}"
-
-      socket.close
-
-      render json: { status: 'success', response: response }
-    rescue => e
-      Rails.logger.error "Socket error: #{e.message}"
-      render json: { status: 'error', message: e.message }, status: 500
+      render json: { status: response.code, body: response.body }
+    rescue Net::ReadTimeout
+      render json: { error: "Request timed out" }, status: :gateway_timeout
     end
   end
 
@@ -33,13 +24,8 @@ class ButtonsController < ApplicationController
     end
 
     def send_button_press(button)
-      url = "http://188.245.183.143:5000/mgba-http/button/tap?key=#{params[:button]}"
-      Rails.logger.info "Sending request to: #{url}"
-
-      Rails.logger.info "Expected socket message: mgba-http.button.tap,#{params[:button]}"
-
       HTTParty.post(
-        url,
+        "http://188.245.183.143:5000/mgba-http/button/tap?key=#{params[:button]}",
         headers: { "accept" => "*/*" },
         timeout: 5
       )
