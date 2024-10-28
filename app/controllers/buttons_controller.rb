@@ -9,8 +9,7 @@ class ButtonsController < ApplicationController
     require 'socket'
 
     begin
-      # Connect directly to mGBA
-      socket = TCPSocket.new('localhost', 8888)
+      socket = TCPSocket.new('188.245.183.143', 8888)
       message = "mgba-http.button.tap,#{params[:button]}"
 
       Rails.logger.info "Sending to mGBA: #{message}"
