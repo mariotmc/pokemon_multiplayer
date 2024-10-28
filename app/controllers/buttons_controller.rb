@@ -10,11 +10,27 @@ class ButtonsController < ApplicationController
       message = Current.player.messages.create!(content: "#{params[:button]}")
       response = send_button_press(params[:button])
 
-      message.render_messages if response.success?
+      Rails.logger.info "Response Status: #{response.code}"
+      Rails.logger.info "Response Body: #{response.body}"
+      Rails.logger.info "Response Headers: #{response.headers.inspect}"
 
-      render json: { status: response.code, body: response.body }
+      if response.success?
+        message.render_messages
+        render json: { status: response.code, body: response.body }
+      else
+        Rails.logger.error "Error Response: #{response.body}"
+        render json: {
+          error: "Server Error",
+          details: response.body,
+          status: response.code
+        }, status: response.code
+      end
     rescue Net::ReadTimeout
       render json: { error: "Request timed out" }, status: :gateway_timeout
+    rescue => e
+      Rails.logger.error "Unexpected error: #{e.class} - #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
+      render json: { error: "Unexpected error", details: e.message }, status: :internal_server_error
     end
   end
 
@@ -24,8 +40,11 @@ class ButtonsController < ApplicationController
     end
 
     def send_button_press(button)
+      url = "http://188.245.183.143:5000/mgba-http/button/tap?key=#{params[:button]}"
+      Rails.logger.info "Sending request to: #{url}"
+
       HTTParty.post(
-        "http://188.245.183.143:5000/mgba-http/button/tap?key=#{params[:button]}",
+        url,
         headers: { "accept" => "*/*" },
         timeout: 5
       )
