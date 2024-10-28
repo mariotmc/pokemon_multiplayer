@@ -12,9 +12,14 @@ class ButtonsController < ApplicationController
 
       message.render_messages if response.success?
 
-      render json: { status: response.code, body: response.body }
+      if response.success?
+        render json: { status: 'success' }
+      else
+        render json: { status: 'error', message: response.body }, status: 500
+      end
     rescue Net::ReadTimeout
-      render json: { error: "Request timed out" }, status: :gateway_timeout
+      Rails.logger.error "HTTP error: #{e.message}"
+      render json: { status: 'error', message: e.message }, status: 500
     end
   end
 
@@ -25,7 +30,7 @@ class ButtonsController < ApplicationController
 
     def send_button_press(button)
       HTTParty.post(
-        "http://188.245.183.143:5000/mgba-http/button/tap?key=#{params[:button]}",
+        "http://188.245.183.143:5001/mgba-http/button/tap?key=#{params[:button]}",
         headers: { "accept" => "*/*" },
         timeout: 5
       )
