@@ -6,31 +6,25 @@ class ButtonsController < ApplicationController
   end
 
   def create
+    require 'socket'
+
     begin
-      message = Current.player.messages.create!(content: "#{params[:button]}")
-      response = send_button_press(params[:button])
+      # Connect directly to mGBA
+      socket = TCPSocket.new('localhost', 8888)
+      message = "mgba-http.button.tap,#{params[:button]}"
 
-      Rails.logger.info "Response Status: #{response.code}"
-      Rails.logger.info "Response Body: #{response.body}"
-      Rails.logger.info "Response Headers: #{response.headers.inspect}"
+      Rails.logger.info "Sending to mGBA: #{message}"
+      socket.puts(message)
 
-      if response.success?
-        message.render_messages
-        render json: { status: response.code, body: response.body }
-      else
-        Rails.logger.error "Error Response: #{response.body}"
-        render json: {
-          error: "Server Error",
-          details: response.body,
-          status: response.code
-        }, status: response.code
-      end
-    rescue Net::ReadTimeout
-      render json: { error: "Request timed out" }, status: :gateway_timeout
+      response = socket.gets
+      Rails.logger.info "Response from mGBA: #{response}"
+
+      socket.close
+
+      render json: { status: 'success', response: response }
     rescue => e
-      Rails.logger.error "Unexpected error: #{e.class} - #{e.message}"
-      Rails.logger.error e.backtrace.join("\n")
-      render json: { error: "Unexpected error", details: e.message }, status: :internal_server_error
+      Rails.logger.error "Socket error: #{e.message}"
+      render json: { status: 'error', message: e.message }, status: 500
     end
   end
 
