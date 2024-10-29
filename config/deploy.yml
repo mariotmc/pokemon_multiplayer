@@ -34,7 +34,6 @@ env:
     - DATABASE_URL
     - POSTGRES_USER
     - POSTGRES_PASSWORD
-    - MGBA_NGROK_URL
 
 # Use a different ssh user than root
 # ssh:
