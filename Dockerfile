@@ -43,7 +43,7 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y libvips postgresql-client curl redis-server && \
+    apt-get install --no-install-recommends -y libvips postgresql-client curl && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy built artifacts: gems, application
@@ -52,20 +52,13 @@ COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --home /rails --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp && \
-    mkdir -p /var/run/redis && \
-    chown rails:rails /var/run/redis
-
+    chown -R rails:rails db log storage tmp
 USER rails:rails
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Copy and set up start script
-COPY bin/start.sh /rails/bin/
-RUN /rails/bin/start.sh
-
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 
-CMD ["/rails/bin/start.sh"]
+CMD ["./bin/rails", "server"]
