@@ -71,7 +71,7 @@ accessories:
   redis:
     image: redis:latest
     host: 188.245.183.143
-    cmd: "redis-server"
+    cmd: "redis-server --bind 0.0.0.0"
     volumes:
       - /var/lib/redis:/data
 
