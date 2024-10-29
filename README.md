@@ -1,24 +1,64 @@
-# README
+# Pokemon Co-op
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails application that allows multiple users to control a Pokemon game simultaneously through a Game Boy interface.
 
-Things you may want to cover:
+<br>
 
-* Ruby version
+## Prerequisites
 
-* System dependencies
+- Ruby 3.2.1
+- PostgreSQL
+- [mGBA Emulator](https://mgba.io/downloads.html)
+- [mGBA-http](https://github.com/nikouu/mGBA-http/releases) files
+- ngrok
 
-* Configuration
+<br>
 
-* Database creation
+## Setup
 
-* Database initialization
+```
+bundle install
+rails db:create db:migrate
+```
 
-* How to run the test suite
+1. Download and setup mGBA-http:
 
-* Services (job queues, cache servers, search engines, etc.)
+   - Download mGBA emulator
+   - Download files from [mGBA-http releases](https://github.com/nikouu/mGBA-http/releases)
+   - Place files in your preferred location
 
-* Deployment instructions
+<br>
 
-* ...
+2. Start the services:
+
+   - Start mGBA-http executable
+   - Launch mGBA with your Pokemon ROM
+   - Load script: Tools > Scripting > File > Load script > mGBASocketServer.lua
+   - Forward port 5000 with `ngrok http 5000`
+   - Set the forwarded URL as MGBA_NGROK_URL in your environment
+
+<br>
+
+3. Start the Rails server:
+
+   - `bin/dev`
+
+<br>
+
+## Play
+
+1. Go to `http://localhost:3000/`
+2. Enter a player name
+3. Press gameboy buttons to initiate game actions on your mGBA instance
+
+## Production
+
+If you're on the free ngrok tier, you will have to keep updating the url provided by ngrok.
+The current approach (not ideal) is to set the `export MGBA_NGROK_URL=<url>` and run `kamal deploy`
+
+<br>
+
+## Credits
+
+- [@nikouu's mGBA-http](https://github.com/nikouu/mGBA-http)
+- Game Boy CSS (slightly modified) [@brundolf's CodePen](https://codepen.io/brundolf/pen/beagbQ)
