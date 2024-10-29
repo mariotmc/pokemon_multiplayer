@@ -24,11 +24,6 @@ class ButtonsController < ApplicationController
     end
 
     def send_button_press(button)
-      if ENV['MGBA_NGROK_URL'].blank?
-        Rails.logger.error "Error: MGBA HTTP URL not configured"
-        return
-      end
-
       HTTParty.post(
         "#{ENV['MGBA_NGROK_URL']}/mgba-http/button/tap?key=#{params[:button]}",
         headers: { "accept" => "*/*", "ngrok-skip-browser-warning" => "true" },
