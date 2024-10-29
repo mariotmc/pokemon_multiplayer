@@ -11,15 +11,10 @@ class ButtonsController < ApplicationController
       response = send_button_press(params[:button])
 
       message.render_messages if response.success?
-
-      if response.success?
-        render json: { status: 'success' }
-      else
-        render json: { status: 'error', message: response.body }, status: 500
-      end
-    rescue Net::ReadTimeout
-      Rails.logger.error "HTTP error: #{e.message}"
-      render json: { status: 'error', message: e.message }, status: 500
+      render json: { status: "success" }
+    rescue => e
+      Rails.logger.error "Error: #{e.message}"
+      render json: { status: "error", message: e.message }, status: 500
     end
   end
 
@@ -29,9 +24,15 @@ class ButtonsController < ApplicationController
     end
 
     def send_button_press(button)
+      if ENV['MGBA_NGROK_URL'].blank?
+        Rails.logger.error "Error: MGBA HTTP URL not configured"
+        render json: { status: "error", message: "MGBA HTTP URL not configured" }, status: 500
+        return
+      end
+
       HTTParty.post(
-        "http://188.245.183.143:5001/mgba-http/button/tap?key=#{params[:button]}",
-        headers: { "accept" => "*/*" },
+        "#{ENV['MGBA_NGROK_URL']}/mgba-http/button/tap?key=#{params[:button]}",
+        headers: { "accept" => "*/*", "ngrok-skip-browser-warning" => "true" },
         timeout: 5
       )
     end
