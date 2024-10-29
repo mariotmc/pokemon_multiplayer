@@ -63,7 +63,7 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Copy and set up start script
 COPY bin/start.sh /rails/bin/
-RUN chmod +x /rails/bin/start.sh
+RUN /rails/bin/start.sh
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
