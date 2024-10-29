@@ -26,7 +26,6 @@ class ButtonsController < ApplicationController
     def send_button_press(button)
       if ENV['MGBA_NGROK_URL'].blank?
         Rails.logger.error "Error: MGBA HTTP URL not configured"
-        render json: { status: "error", message: "MGBA HTTP URL not configured" }, status: 500
         return
       end
 
