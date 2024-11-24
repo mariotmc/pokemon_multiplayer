@@ -12,6 +12,7 @@ servers:
 
 proxy:
   ssl: false
+  host: pokemon.mariotmc.com
   app_port: 3000
   healthcheck:
     path: /up
